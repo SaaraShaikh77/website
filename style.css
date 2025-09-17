@@ -67,94 +67,148 @@ p {
   box-shadow: 0 0 30px rgba(255,77,109,1);
 }
 
-/* Snap Modal */
+/* ---------- General Reset ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #fff0f5;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ---------- Intro Screen ---------- */
+#intro-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffefff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+}
+
+#intro-screen.fade-out {
+  opacity: 0;
+}
+
+#intro-screen h2 {
+  font-size: 2rem;
+  color: #ff69b4;
+}
+
+/* ---------- Main Content ---------- */
+#main-content {
+  display: none;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+#main-content.fade-in {
+  opacity: 1;
+}
+
+h1 {
+  text-align: center;
+  margin: 20px 0;
+  color: #ff1493;
+}
+
+p {
+  max-width: 700px;
+  margin: 20px auto;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  text-align: center;
+  color: #333;
+}
+
+/* ---------- Snap Modal ---------- */
 .modal {
   display: none;
   position: fixed;
-  z-index: 2000;
-  left: 0; top: 0;
+  top: 0; left: 0;
   width: 100%; height: 100%;
-  background: rgba(0,0,0,0.9);
+  background: rgba(0,0,0,0.6);
   justify-content: center;
   align-items: center;
+  z-index: 2000;
 }
+
 .modal-content {
-  position: relative;
-  max-width: 600px;
-  width: 90%;
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 0 30px rgba(255,77,109,0.9);
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 90%;
 }
-.modal-content video {
-  width: 100%;
-  display: block;
-  border-radius: 15px;
-}
+
 .close {
   position: absolute;
   top: 10px;
   right: 20px;
-  font-size: 2em;
-  color: #fff;
+  font-size: 2rem;
   cursor: pointer;
-  text-shadow: 0 0 10px #ff4d6d;
+  color: #ff1493;
 }
-.close:hover { color: #ff4d6d; }
 
-/* Slider */
+/* ---------- Slider ---------- */
 .slider {
   position: relative;
-  max-width: 600px;
+  width: 80%;
   margin: 40px auto;
   overflow: hidden;
   border-radius: 15px;
-  box-shadow: 0px 0px 20px rgba(255, 77, 109, 0.7);
 }
+
 .slides {
   display: flex;
-  transition: transform 0.6s ease-in-out;
+  transition: transform 0.5s ease-in-out;
 }
+
 .slides img {
   width: 100%;
   flex-shrink: 0;
-  border-radius: 15px;
 }
+
 .prev, .next {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0,0,0,0.5);
+  font-size: 2rem;
+  background: rgba(255,255,255,0.7);
   border: none;
-  color: #fff;
-  font-size: 2em;
-  padding: 10px;
   cursor: pointer;
+  padding: 10px 15px;
   border-radius: 50%;
-  transition: background 0.3s;
+  color: #ff1493;
 }
-.prev:hover, .next:hover { background: rgba(255,77,109,0.8); }
-.prev { left: 15px; }
-.next { right: 15px; }
 
-/* Floating Particles */
+.prev { left: 10px; }
+.next { right: 10px; }
+
+/* ---------- Floating Elements ---------- */
 .star, .dew, .heart {
-  position: absolute;
-  border-radius: 50%;
+  position: fixed;
+  width: 15px;
+  height: 15px;
   pointer-events: none;
+  z-index: 500;
 }
-.star { width: 3px; height: 3px; background: white; animation: twinkle 4s infinite; }
-.dew { width: 6px; height: 6px; background: #87ceeb; animation: floatUp 8s linear infinite; }
-.heart {
-  width: 25px; height: 25px; background: #ff4d6d;
-  transform: rotate(-45deg); animation: floatUp 6s linear infinite;
-  opacity: 0.8; box-shadow: 0 0 15px rgba(255,77,109,0.9);
-}
-.heart::before, .heart::after { content: ''; position: absolute; width: 25px; height: 25px; background: #ff4d6d; border-radius: 50%; }
-.heart::before { top: -12px; left: 0; }
-.heart::after { left: 12px; top: 0; }
 
-/* Animations */
-@keyframes twinkle { 0%,100% {opacity:0.2;} 50% {opacity:1;} }
-@keyframes floatUp { 0% {transform:translateY(0) rotate(-45deg) scale(1); opacity:1;} 50% {transform:translateY(-400px) rotate(-45deg) scale(1.2); opacity:0.7;} 100% {transform:translateY(-800px) rotate(-45deg) scale(0.8); opacity:0;} }
-@keyframes sparkle { 0% {text-shadow: 0 0 10px #ff4d6d;} 50% {text-shadow: 0 0 25px #ff77aa;} 100% {text-shadow: 0 0 10px #ff4d6d;} }
+.star { background: yellow; border-radius: 50%; }
+.dew { background: lightblue; border-radius: 50%; }
+.heart {
+  background: red;
+  width: 20px; height: 20px;
+  transform: rotate(-45deg);
+  clip-path: polygon(50% 0%, 61% 15%, 75% 15%, 85% 25%, 85% 40%, 50% 80%, 15% 40%, 15% 25%, 25% 15%, 39% 15%);
+}

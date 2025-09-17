@@ -1,22 +1,26 @@
 document.addEventListener("DOMContentLoaded", () => {
-
   const introScreen = document.getElementById("intro-screen");
   const mainContent = document.getElementById("main-content");
   const bgMusic = document.getElementById("bg-music");
 
-  // ---------- Automatically transition after 5 seconds ----------
+  // ---------- Intro Screen Transition ----------
   setTimeout(() => {
     introScreen.classList.add("fade-out");
     setTimeout(() => {
       introScreen.style.display = "none";
       mainContent.style.display = "block";
       mainContent.classList.add("fade-in");
-      bgMusic.play();
+
+      // Play background music (handle autoplay restrictions)
+      bgMusic.play().catch(() => {
+        document.body.addEventListener("click", () => bgMusic.play(), { once: true });
+      });
     }, 1000); // fade-out duration
   }, 5000);
 
   // ---------- Floating Elements ----------
   function createFloatingElement(type) {
+    if (document.querySelectorAll(`.${type}`).length > 30) return; // max 30
     const elem = document.createElement("div");
     elem.className = type;
     elem.style.left = Math.random() * window.innerWidth + "px";
@@ -67,12 +71,8 @@ document.addEventListener("DOMContentLoaded", () => {
     slides.style.transform = `translateX(${-slideIndex * 100}%)`;
   }
 
-  document.querySelector(".next").addEventListener("click", () => {
-    showSlide(slideIndex + 1);
-  });
-  document.querySelector(".prev").addEventListener("click", () => {
-    showSlide(slideIndex - 1);
-  });
+  document.querySelector(".next").addEventListener("click", () => showSlide(slideIndex + 1));
+  document.querySelector(".prev").addEventListener("click", () => showSlide(slideIndex - 1));
 
   // Swipe support for mobile
   let startX = 0;
@@ -83,6 +83,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (endX - startX > 50) showSlide(slideIndex - 1);
   });
 
-  showSlide(slideIndex);
+  // Keyboard navigation
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") showSlide(slideIndex - 1);
+    if (e.key === "ArrowRight") showSlide(slideIndex + 1);
+  });
 
-});
+  showSlide(slideIndex)
